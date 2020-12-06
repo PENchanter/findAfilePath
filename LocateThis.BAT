@@ -9,12 +9,16 @@ CALL :FindNow \ BACKUP
 ::                      ^^^^^^^^^^^^^^^ path where TEST FILE is (hopefully) found
 
 :: test for success/failure
-IF "%_locatethis%"=="File Not Found" ECHO. * File Not Found!!! *
-:: i.e.: '%BACKUP%' ('keyword' from above)
 IF NOT "%_locatethis%"=="File Not Found" ECHO ** File '%_locatefile%location.txt' found in '%_locatethis%' **
 :: i.e.: '%BACKUP%' ('keyword' from above)
 
+:: the following line of code is all that fails...
+::  %_locatethis% does not test true for    "File Not Found" when no search results are found
+IF "%_locatethis%"=="File Not Found" ECHO. * File Not Found!!! *
+:: i.e.: '%BACKUP%' ('keyword' from above)
+
 PAUSE
+
 EXIT /B
 :: and for redundancy sake...
 GOTO :EOF
@@ -39,4 +43,3 @@ SET "%_locatethis%=%_result%"
 ECHO Result: var '_locatethis' = var name '%_locatethis%' = pathname '%_result%'
 
 EXIT /B
-
